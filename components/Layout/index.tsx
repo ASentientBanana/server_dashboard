@@ -1,54 +1,34 @@
-import { ReactNode, useState, memo, Dispatch,SetStateAction, useEffect } from 'react'
-import Router from 'next/router';
-import styles from './styles.module.scss'
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import { useRouter } from 'next/router';
+import LoginModal from '../AccountModals/loginModal';
+import { useSession } from 'next-auth/react';
+import Container from 'react-bootstrap/Container';
 
-interface IProps {
-    page: {
-        id:number
-        name:string,
-        path:string
-    },
-}
-
-const Link = ({ page }: IProps) => (
-    <button
-        
-        onClick={() => {
-            Router.push(page.path);
-        }}>{page.name}</button>
-)
-
-const pages = [
-    {
-        name:'Home',
-        path:'/'
-    },
-    {
-        name:'Some page',
-        path:'some-page'
-    }
-]
-
-const Layout = ({ children }: { children: ReactNode | ReactNode[] }) => {
-    // const [selectedPage, setSelectedPage] = useState(0)
-    useEffect(()=>{
-        console.log(Router.pathname);
-    },[])
-    
+const Layout = () => {
+    const router = useRouter();
+    const { data: session } = useSession()
     return (
-        <>
-            <nav className={styles.container}>
-                {pages.map((page, i) => (
-                    <Link 
-                        key={i} 
-                        page={{...page, id:i}}
-                    />
-                ))}
-            </nav>
-            {children}
-        </>
-    )
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Container>
+                <Navbar.Brand href="#home">Dashboard</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Collapse id="responsive-navbar-nav">
+                    <Nav className="me-auto">
+                        <Nav.Link href="#features">Features</Nav.Link>
+                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                        </NavDropdown>
+                    </Nav>
+                    <Nav>
+                        <LoginModal />
+                    </Nav>
+                </Navbar.Collapse>
+            </Container>
+        </Navbar>
+    );
 }
 
-
-export default Layout;
+export default Layout

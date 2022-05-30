@@ -1,25 +1,39 @@
-import styles from '../styles/Home.module.css'
-import { IParsedResponse, IIncomingResponse } from '../types/repo';
-import RepositoryTile from '../components/RepositoryTile';
-import RepositoryList from '../components/Repositorylist';
+import { Container } from 'react-bootstrap';
+// import { DBAdapter } from '../services/database';
+// import { useEffect } from 'react';
+import { getSession, useSession, signOut } from 'next-auth/react'
+// import type { NextPageContext } from "next"
+import { Files } from '../services/files';
 
-export const getServerSideProps = async () =>{
-  const response  = await fetch('https://api.ipify.org?format=json')
-  const net = await response.json();
+export const getServerSideProps = async () => {
+  // const users = await DBAdapter.query('SELECT * FROM User', 'get')
+  // const res = await Files.getFolderContents('/home/petar/Downloads/');
+  const nginxSites = await Files.getNGINXSites();
+  return {
+    props: {
+      users: [],
 
-  return{
-    props:{
-        net
     }
   }
 }
 
-const Home = ({ net }:{net:{ip:string}}) => {
+const Home = ({ }: { users: any, session: any }) => {
+  const { data: session } = useSession()
+
   return (
-    <div>
-      Welcome
-    </div>
+    <Container>
+      Welcome: User
+      Public IP: 127.0.0.1
+      Description about the app
+      <br />
+      {JSON.stringify(session)}
+      <br />
+      <button onClick={() => signOut()}>
+        Sign out
+      </button>
+    </Container>
   )
 }
 
 export default Home
+
