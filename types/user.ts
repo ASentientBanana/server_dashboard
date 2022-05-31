@@ -1,4 +1,8 @@
 
+export type User = {
+
+}
+
 export type NewUser = {
     username: string,
     password: string
