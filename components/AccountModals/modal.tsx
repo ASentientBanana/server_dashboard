@@ -6,10 +6,11 @@ import React, { ReactNode, useRef, useState } from 'react';
 interface IModalProps {
     children: ReactNode | ReactNode[],
     confirmButtonText: string,
-    formName: string
+    formName: string,
+    primaryButtonText: string
 }
 
-const AccountModal = ({ children, confirmButtonText, formName }: IModalProps) => {
+const AccountModal = ({ children, confirmButtonText, formName, primaryButtonText }: IModalProps) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -17,10 +18,10 @@ const AccountModal = ({ children, confirmButtonText, formName }: IModalProps) =>
 
 
     return (
-        <Container>
+        <Container >
             <>
-                <Button onClick={handleShow} variant="outline-primary">
-                    Account sign in
+                <Button onClick={handleShow} variant="outline-primary" >
+                    {primaryButtonText}
                 </Button>
 
                 <Modal

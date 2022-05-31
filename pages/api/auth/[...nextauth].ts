@@ -1,8 +1,7 @@
 import NextAuth from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials';
-import { redirect } from 'next/dist/server/api-utils';
 import { DBAdapter } from '../../../services/database';
-
+import bcrypt from 'bcrypt';
 
 
 export default NextAuth({
@@ -27,7 +26,7 @@ export default NextAuth({
         if (credentials) {
           const _user = await DBAdapter.getUser(credentials.username);
           const { password, ...user } = _user;
-          if (password === credentials.password) {
+          if (await bcrypt.compare(credentials.password, password)) {
             return user
           };
         }
