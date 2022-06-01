@@ -2,7 +2,8 @@ import sqlite3, { Database } from 'sqlite3';
 import getConfig from 'next/config'
 import queries from './definitions/queries';
 import bcrypt from 'bcrypt';
-import { AuthUserDBResponse, User } from '../types/user';
+import { AuthUserDBResponse } from '../types/user';
+import { NewProject } from '../types/project';
 
 const conf = getConfig();
 const DATABASE_PATH = `${conf.serverRuntimeConfig.baseDir}/db.sqlite`;
@@ -68,11 +69,19 @@ export class DBAdapter {
 
   static async createUser(username: string, password: string) {
     const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt)
+    const passwordHash = await bcrypt.hash(password, salt);
     const db = await DBAdapter._openConnection();
     await DBAdapter._query(db, queries.CREATE_USER({ username, password: passwordHash }), "get");
     const user = await DBAdapter._query(db, queries.GET_USER(username), 'get') as AuthUserDBResponse
     db.close()
     return { username: user.username, id: user.id, password };
   }
+
+  static async createProjectEntry(project: NewProject) {
+    const query = queries.CREATE_PROJECT(project);
+    const db = await DBAdapter._openConnection();
+    DBAdapter._query(db, query, 'run');
+    db.close();
+  }
+
 }

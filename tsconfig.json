@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "services/startup.js"
+    "scripts/startup.js"
   ],
   "exclude": [
     "node_modules"

@@ -9,7 +9,7 @@ export default async function handler(
 ) {
     console.log(req.method);
     if (req.method !== 'POST') {
-        res.status(400).json({ username: '', id: 0, password: '' });
+        res.status(400).json({ username: '', id: 'masdlknakdn', password: '' });
         return;
     };
     const { username, password } = req.body

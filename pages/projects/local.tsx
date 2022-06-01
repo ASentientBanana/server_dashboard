@@ -6,13 +6,15 @@ import { Files } from '../../services/files';
 import { useSession } from 'next-auth/react';
 import ProjectList from '../../components/ProjectList';
 import { File } from '../../types/file';
+import getConfig from 'next/config';
 
 export const getServerSideProps = async () => {
-  const siteList = await Files.getFolderContents('/home/petarkocic/Projects/');
+  const projectPath = getConfig()
+  const siteList = await Files.getFolderContents(projectPath.serverRuntimeConfig.baseDir);
   const nginxSites = await Files.getNGINXSites();
   let sessionStatus = false;
 
-  const testing = await Files.getFolderContents(['/home/petarkocic/Projects/server_dashboard/']);
+  const testing = await Files.getFolderContents(['/home/petar/Projects/server_dashboard/']);
   return {
     props: {
       users: [],

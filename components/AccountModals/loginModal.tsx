@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import { signIn } from 'next-auth/react';
 import React, { useRef, useState } from 'react';
-import AccountModal from './modal';
+import AccountModal from '../modal';
 
 interface IInputState {
     [index: string]: string,

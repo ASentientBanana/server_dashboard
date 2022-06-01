@@ -20,7 +20,7 @@ export class Files {
       for (let i = 0; i < folder.length; i++) {
         const dirContents = await promises.readdir(folder[i], { withFileTypes: true });
         for (let j = 0; j < dirContents.length; j++) {
-          if (dirContents[j].isFile()) {
+          if (dirContents[j].isDirectory()) {
             const path = `${folder[i]}${dirContents[j].name}`;
             // const _file = await promises.readFile(path)
             contents.push({ name: dirContents[j].name, path });
