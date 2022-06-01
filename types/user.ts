@@ -1,6 +1,7 @@
 
 export type User = {
-
+    username: string,
+    id: string
 }
 
 export type NewUser = {
@@ -10,12 +11,12 @@ export type NewUser = {
 
 export type AuthRegisterUserResponse = {
     username: string,
-    id: number,
+    id: string,
     password: string
 }
 
 export type AuthUserDBResponse = {
     username: string,
-    id: number,
+    id: string,
     password: string
 }

@@ -16,10 +16,10 @@ const Layout = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                        <Nav.Link href="/settings">Settings</Nav.Link>
+                        <NavDropdown title="Projects" id="collapsible-nav-dropdown">
+                            <NavDropdown.Item href="/projects/local">Local projects</NavDropdown.Item>
+                            <NavDropdown.Item href="/projects/remote">Remote Projects</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                     <Nav>

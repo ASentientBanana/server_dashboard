@@ -1,8 +1,8 @@
-import sqlite3 from 'sqlite3';
+import sqlite3, { Database } from 'sqlite3';
 import getConfig from 'next/config'
 import queries from './definitions/queries';
 import bcrypt from 'bcrypt';
-import { AuthUserDBResponse } from '../types/user';
+import { AuthUserDBResponse, User } from '../types/user';
 
 const conf = getConfig();
 const DATABASE_PATH = `${conf.serverRuntimeConfig.baseDir}/db.sqlite`;
@@ -21,33 +21,48 @@ export class DBAdapter {
     })
   }
 
+  private static _queryAdapter(db: sqlite3.Database, resolver: (param: any) => void, reject: (reason?: any) => void): { [index: string]: any } {
+    const cb = (err: Error, result?: any) => {
+      if (err) reject(err)
+      else resolver(result)
+    }
+    return {
+      run: (command: string) => db.run(command, cb),
+      get: (command: string) => db.get(command, cb),
+      all: (command: string) => db.all(command, cb),
+    }
+  }
+
   private static async _query(db: sqlite3.Database, command: string, method: string) {
     return new Promise((resolve, reject) => {
-      //@ts-ignore Ignoring the type error cant index database with type string
-      db[method](command, (error: Error, result: any) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(result);
-        }
-      });
+      const queryMethods = DBAdapter._queryAdapter(db, resolve, reject);
+      if (Object.keys(queryMethods).includes(method)) {
+        queryMethods[method](command)
+      } else {
+        reject("Unsupported method");
+      }
     });
   }
 
-  static async query(command: string, method: string = 'all') {
+  static async query<T>(command: string, method: string = 'all'): Promise<T> {
     const db = await DBAdapter._openConnection();
-    const queryResults = await DBAdapter._query(db, command, method);
-    db.close();
-    return queryResults;
+    try {
+      const queryResults = await DBAdapter._query(db, command, method);
+      db.close();
+      return queryResults as T;
+    } catch (error) {
+      db.close()
+      throw Error('Database query error')
+    }
   }
 
   static async getUser(username: string) {
-    const user = await DBAdapter.query(queries.GET_USER(username), 'get');
-    return user as { username: string, id: string, password: string };
+    const user = await DBAdapter.query<AuthUserDBResponse>(queries.GET_USER(username), 'get');
+    return user;
   }
 
   static async getAllUsers() {
-    const users = await DBAdapter.query(queries.GET_ALL_USERS, 'get');
+    const users = await DBAdapter.query<AuthUserDBResponse[]>(queries.GET_ALL_USERS, 'get');
     return users;
   }
 
@@ -61,4 +76,3 @@ export class DBAdapter {
     return { username: user.username, id: user.id, password };
   }
 }
-

@@ -17,9 +17,14 @@ const Home = ({ }: { users: any, session: any }) => {
 
   return (
     <Container>
-      Welcome: User
-      Public IP: 127.0.0.1
-      Description about the app
+      {session ?
+        <>
+          {/* @ts-ignore */}
+          <h1>Welcome, {session.user?.username} </h1>
+        </> :
+        <>
+          <h1>Please log in</h1>
+        </>}
     </Container>
   )
 }

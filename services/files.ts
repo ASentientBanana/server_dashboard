@@ -1,5 +1,6 @@
 import { promises } from 'fs';
 import paths from './definitions/paths';
+import { File } from '../types/file';
 
 export class Files {
 
@@ -13,16 +14,24 @@ export class Files {
     }
   }
 
-  static async getFolderContents(folder: string | string[]): Promise<string[]> {
-    const contents: string[] = []
+  static async getFolderContents(folder: string | string[]): Promise<File[]> {
+    const contents: File[] = []
     if (Array.isArray(folder)) {
       for (let i = 0; i < folder.length; i++) {
-        const dirContents = await promises.readdir(folder[i]);
-        contents.push(...dirContents);
+        const dirContents = await promises.readdir(folder[i], { withFileTypes: true });
+        for (let j = 0; j < dirContents.length; j++) {
+          if (dirContents[j].isFile()) {
+            const path = `${folder[i]}${dirContents[j].name}`;
+            // const _file = await promises.readFile(path)
+            contents.push({ name: dirContents[j].name, path });
+          }
+        }
+        // const files = dirContents.map(async fileName => await promises.readFile(`${folder[i]}/${fileName}`))
       }
     } else {
+      // TODO 
       const dirContents = await promises.readdir(folder);
-      contents.push(...dirContents);
+      contents.push({ name: '', path: '' });
     }
     return contents;
   }
