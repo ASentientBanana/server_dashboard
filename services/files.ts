@@ -14,21 +14,25 @@ export class Files {
     }
   }
 
-  static async getFolderContents(folder: string[]): Promise<File[]> {
+  static async getFolderContents(folders: string[]): Promise<File[]> {
+
     const contents: File[] = []
-    if (Array.isArray(folder)) {
-      for (let i = 0; i < folder.length; i++) {
-        const dirContents = await promises.readdir(folder[i], { withFileTypes: true });
+    if (Array.isArray(folders)) {
+      console.log(folders);
+      for (let i = 0; i < folders.length; i++) {
+        const dirContents = await promises.readdir(folders[i], { withFileTypes: true });
         for (let j = 0; j < dirContents.length; j++) {
           if (dirContents[j].isDirectory()) {
-            const path = `${folder[i]}${dirContents[j].name}`;
+            const path = `${folders[i]}/${dirContents[j].name}`;
             // const _file = await promises.readFile(path)
+
             contents.push({ name: dirContents[j].name, path });
           }
         }
         // const files = dirContents.map(async fileName => await promises.readFile(`${folder[i]}/${fileName}`))
       }
     }
+    console.log(contents);
 
     return contents;
   }
