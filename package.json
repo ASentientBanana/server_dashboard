@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "setup": "node ./scripts/startup.js && node ./scripts/register.js Nikolica Prikola"
+    "setup": "node ./scripts/database/startup.js",
+    "register": "node ./scripts/database/register.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

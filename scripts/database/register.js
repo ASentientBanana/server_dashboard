@@ -1,6 +1,6 @@
 const { argv } = require('process');
 const sql = require('sqlite3');
-const config = require('../next.config');
+const config = require('../../next.config');
 const bcrypt = require('bcrypt');
 
 // Argument order: username, password 
@@ -19,10 +19,7 @@ const generatePassword = async (password) => {
     const passwordHash = await generatePassword(password)
     const baseDir = config.serverRuntimeConfig.baseDir;
     const db = new sql.Database(`${baseDir}/db.sqlite`)
-    const q = REGISTER_USER({ password: passwordHash, username });
-    console.log(q);
-    console.log(`${baseDir}/db.sqlite`);
-    db.run(q, (res, err) => {
+    db.run(REGISTER_USER({ password: passwordHash, username }), (res, err) => {
         if (err) throw err;
     });
 })()

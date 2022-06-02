@@ -23,7 +23,7 @@ const Layout = () => {
                         </NavDropdown>
                     </Nav>
                     <Nav>
-                        {session ? <Button onClick={() => signOut()} > Sign out </Button> : <> <LoginModal /> <RegisterModal /> </>}
+                        {session ? <Button onClick={() => signOut()} > Sign out </Button> : <> <LoginModal /> </>}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

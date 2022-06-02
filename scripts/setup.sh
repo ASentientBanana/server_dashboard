@@ -13,6 +13,12 @@ config_keyword_set=('&server_name' '&server_port')
 installcmd=' apt install'
 number_of_options=3
 
+
+echo "Enter username:"
+read username
+echo "Enter password:"
+read password
+
 echo "Select ditribution: "
 echo "[1] Ubuntu/Debian: "
 echo "[2] Fedora/REL:"
@@ -64,15 +70,20 @@ touch $project_dir/db.sqlite
 
 
 nvm use 16
-node $project_dir/scripts/startup.js
+
+
+node $project_dir/scripts/database/setup.js && node $project_dir/scripts/database/register.js $username $password
 
 
 # echo $RANDOM | md5sum | head -c 20; echo;
 
-
+echo "Installing packages..."
 $installcmd $packages
 systemctl enable nginx.service && systemctl start nginx.service
 
+echo "Installing node modules..."
+yarn --cwd $project_dir install
+echo "Creating build..."
 yarn --cwd $project_dir build
 
 echo 'Creating server directory...'

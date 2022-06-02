@@ -11,8 +11,8 @@ const queries = {
   GET_USER: (username: string) => `SELECT * FROM User WHERE username="${username}"`,
   CREATE_USER: ({ username, password }: NewUser) => `INSERT INTO "User" (username, password) VALUES ("${username}", "${password}")`,
   CREATE_PROJECT: ({ name, location, type, userID }: NewProject) => `INSERT INTO "Projects" (name, location, type, user_id ) VALUES ("${name}", "${location}","${type}")"${userID}"`,
-  CHANGE_PASSWORD: (password: string, id: string) => `UPDATE User SET password = "${password}" WHERE id = ${id};`
-
+  CHANGE_PASSWORD: (password: string, id: string) => `UPDATE User SET password = "${password}" WHERE id = ${id};`,
+  GET_PROJECTS_IF_LOCAL: (isLocal: boolean, userID: string) => `SELECT * FROM Projects INNER JOIN Paths ON Projects.id = Paths.project_id WHERE is_local=${isLocal} AND Projects.user_id=${userID};`
 }
 
 export default queries;

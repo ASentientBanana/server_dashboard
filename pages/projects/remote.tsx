@@ -16,7 +16,7 @@ const Home = ({ users }: { users: any }) => {
 
   return (
     <Container>
-        Projects Remote
+
     </Container>
   )
 }

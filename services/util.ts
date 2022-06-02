@@ -1,3 +1,6 @@
+import { DBAdapter } from "./database";
+import { Files } from "./files";
+
 export const sanitizeInclude = (source: any, fields: string[]) => {
     const newObject = { ...source };
     const keys = Object.keys(source);
@@ -16,3 +19,10 @@ export const sanitizeExclude = (source: any, fields: string[]) => {
     }
     return newObject;
 }
+
+export const addProjectDir = async (path: string) => {
+
+    const contents = await Files.getFolderContents([path]);
+
+    return {}
+}  

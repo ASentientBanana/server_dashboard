@@ -1,9 +1,9 @@
 import { promises } from 'fs';
 import paths from './definitions/paths';
 import { File } from '../types/file';
+import getConfig from 'next/config';
 
 export class Files {
-
   static async getNGINXSites() {
     // const res = await promises.stat('/home/petar/Downloads/')
     const availableSites = await promises.readdir(paths.SITES_AVAILABLE);
@@ -14,7 +14,7 @@ export class Files {
     }
   }
 
-  static async getFolderContents(folder: string | string[]): Promise<File[]> {
+  static async getFolderContents(folder: string[]): Promise<File[]> {
     const contents: File[] = []
     if (Array.isArray(folder)) {
       for (let i = 0; i < folder.length; i++) {
@@ -28,11 +28,22 @@ export class Files {
         }
         // const files = dirContents.map(async fileName => await promises.readFile(`${folder[i]}/${fileName}`))
       }
-    } else {
-      // TODO 
-      const dirContents = await promises.readdir(folder);
-      contents.push({ name: '', path: '' });
     }
+
     return contents;
+  }
+  static async loadDeploymentArgs(deployment: string) {
+    const baseDir = getConfig().serverRuntimeConfig.baseDir as string;
+    const file = await promises.readFile(`${baseDir}/scripts/deployment/${deployment}.sh`, { encoding: 'utf-8' });
+    const separatedFile = file.split('\n');
+    let argString = ''
+    for (let index = 0; index < separatedFile.length; index++) {
+      if (separatedFile[index].slice(0, 5) === '#args') {
+        argString = separatedFile[index];
+      }
+    }
+
+    return argString.split(' ').slice(1).filter(arg => { if (arg) return arg });
+
   }
 }
