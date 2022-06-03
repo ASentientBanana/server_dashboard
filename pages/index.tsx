@@ -6,7 +6,6 @@ import DirInput from '../components/DirInput';
 export const getServerSideProps = async () => {
   const nginxSites = await Files.getNGINXSites();
   const args = await Files.loadDeploymentArgs('react');
-  console.log(args);
 
   return {
     props: {

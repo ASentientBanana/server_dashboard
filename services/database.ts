@@ -53,7 +53,7 @@ export class DBAdapter {
       return queryResults as T;
     } catch (error) {
       db.close()
-      throw Error('Database query error')
+      throw error
     }
   }
 
@@ -78,10 +78,11 @@ export class DBAdapter {
   }
 
   static async createProjectEntry(project: NewProject) {
-    const query = queries.CREATE_PROJECT(project);
+    const projectQuery = queries.CREATE_PROJECT(project);
+    const pathQuery = queries.CREATE_PROJECT(project);
     const db = await DBAdapter._openConnection();
-    DBAdapter._query(db, query, 'run');
+    await DBAdapter._query(db, projectQuery, 'run');
+    await DBAdapter._query(db, pathQuery, 'run');
     db.close();
   }
-
 }

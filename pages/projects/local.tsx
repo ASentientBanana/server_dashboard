@@ -2,27 +2,45 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 // import { DBAdapter } from '../../services/database';
 import { Files } from '../../services/files';
-import { useSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import ProjectList from '../../components/ProjectList';
 import { File } from '../../types/file';
 import getConfig from 'next/config';
 import { useState } from 'react';
 import RegisteredView from '../../components/LocalProjects/RegisteredView';
 import UnregisteredView from '../../components/LocalProjects/UnregisteredView';
+import { DBAdapter } from '../../services/database';
+import queries from '../../services/definitions/queries';
+import { NextPageContext } from 'next';
+import PATHS from '../../services/definitions/paths';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: NextPageContext) => {
   const projectPath = getConfig()
   const nginxSites = await Files.getNGINXSites();
-  const unregisteredList = await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]);
-  console.log('List');
-  console.log(unregisteredList);
+  const session = await getSession(context);
 
+  if (!session) {
+    return {
+      props: {
+        sites: {
+          nginx: { available: [], enabled: [] },
+          unregistered: [],
+          registered: []
+        }
+      }
+    }
+  }
+  const registeredProjects = await DBAdapter
+    .query<File[]>(queries.GET_PROJECTS_IF_LOCAL(true, session?.user?.id));
+  const pathList = registeredProjects.map(proj => proj.path);
+  const unregisteredList = (await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]))
+    .filter((project) => !pathList.includes(project.path));
   return {
     props: {
       sites: {
         nginx: nginxSites,
-        unregistered: unregisteredList,
-        registered: []
+        unregistered: registeredProjects,
+        registered: unregisteredList
       }
     }
   }
@@ -32,8 +50,8 @@ interface ILocalProjectProps {
 }
 
 interface IRenderViewProps {
-  unregistered: any,
-  registered: any
+  unregistered: File[],
+  registered: File[]
 }
 
 const renderView = (key: string, props: IRenderViewProps) => {
@@ -42,7 +60,6 @@ const renderView = (key: string, props: IRenderViewProps) => {
       return <RegisteredView />
     case 'link-2':
       return <UnregisteredView projects={props.unregistered} />
-
     default:
       return <RegisteredView />
   }

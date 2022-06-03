@@ -18,7 +18,6 @@ export class Files {
 
     const contents: File[] = []
     if (Array.isArray(folders)) {
-      console.log(folders);
       for (let i = 0; i < folders.length; i++) {
         const dirContents = await promises.readdir(folders[i], { withFileTypes: true });
         for (let j = 0; j < dirContents.length; j++) {
@@ -32,8 +31,6 @@ export class Files {
         // const files = dirContents.map(async fileName => await promises.readFile(`${folder[i]}/${fileName}`))
       }
     }
-    console.log(contents);
-
     return contents;
   }
   static async loadDeploymentArgs(deployment: string) {

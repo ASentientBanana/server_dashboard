@@ -12,7 +12,6 @@ export const getServerSideProps = async () => {
 }
 
 const Home = ({ users }: { users: any }) => {
-  console.log(users);
 
   return (
     <Container>

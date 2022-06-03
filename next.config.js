@@ -6,5 +6,8 @@ const nextConfig = {
   serverRuntimeConfig: {
     baseDir: __dirname
   },
+  env: {
+    baseUrl: process.env.BASE_RUL
+  }
 }
 module.exports = nextConfig

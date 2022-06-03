@@ -1,16 +1,21 @@
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { ButtonVariant } from 'react-bootstrap/esm/types';
 import React, { ReactNode, useRef, useState } from 'react';
 
 interface IModalProps {
     children: ReactNode | ReactNode[],
     confirmButtonText: string,
-    formName: string,
-    primaryButtonText: string
+    formName?: string,
+    primaryButtonText: string,
+    options: {
+        btnVariant?: ButtonVariant
+    }
+    callback?: () => void
 }
 
-const AccountModal = ({ children, confirmButtonText, formName, primaryButtonText }: IModalProps) => {
+const AccountModal = ({ callback, children, confirmButtonText, formName, primaryButtonText, options }: IModalProps) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -20,7 +25,7 @@ const AccountModal = ({ children, confirmButtonText, formName, primaryButtonText
     return (
         <Container >
             <>
-                <Button onClick={handleShow} variant="outline-primary" >
+                <Button onClick={handleShow} variant="outline-dark" >
                     {primaryButtonText}
                 </Button>
 
@@ -37,7 +42,18 @@ const AccountModal = ({ children, confirmButtonText, formName, primaryButtonText
                         {children}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button form={formName} variant="primary" type='submit'>{confirmButtonText}</Button>
+                        {
+                            callback ?
+                                <Button
+                                    onClick={() => callback()}
+                                    variant={options?.btnVariant ? options?.btnVariant : 'primary'}
+                                    type='button'>{confirmButtonText}
+                                </Button> :
+                                <Button
+                                    form={formName}
+                                    variant={options?.btnVariant ? options?.btnVariant : 'primary'} type='submit'>{confirmButtonText}
+                                </Button>
+                        }
                     </Modal.Footer>
                 </Modal>
             </>
