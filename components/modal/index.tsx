@@ -11,6 +11,7 @@ interface IModalProps {
     primaryButtonText: string,
     options: {
         btnVariant?: ButtonVariant
+        primaryBtnVariant?: ButtonVariant
     }
     callback?: () => void
 }
@@ -25,7 +26,7 @@ const AccountModal = ({ callback, children, confirmButtonText, formName, primary
     return (
         <Container >
             <>
-                <Button onClick={handleShow} variant="outline-dark" >
+                <Button onClick={handleShow} variant={options?.primaryBtnVariant ? options?.primaryBtnVariant : 'primary'} >
                     {primaryButtonText}
                 </Button>
 

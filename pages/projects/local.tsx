@@ -35,6 +35,8 @@ export const getServerSideProps = async (context: NextPageContext) => {
   const pathList = registeredProjects.map(proj => proj.path);
   const unregisteredList = (await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]))
     .filter((project) => !pathList.includes(project.path));
+  console.log(registeredProjects);
+
   return {
     props: {
       sites: {

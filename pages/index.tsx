@@ -25,7 +25,6 @@ const Home = ({ args }: { users: any, args: string[] }) => {
           {/* @ts-ignore */}
           <h1>Welcome, {session.user?.username} </h1>
           <h5>Arguments</h5>
-          <DirInput />
           <ul>
             {args.map((e, i) => <li key={`${e}-${i}`}>{e}</li>)}
           </ul>

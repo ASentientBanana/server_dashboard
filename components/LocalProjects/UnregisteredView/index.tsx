@@ -12,8 +12,6 @@ interface IProps {
 
 const UnregisteredView = ({ projects }: IProps) => {
     useEffect(() => {
-        console.log("projects");
-        console.log(projects);
     }, [])
     return (
         <Container>

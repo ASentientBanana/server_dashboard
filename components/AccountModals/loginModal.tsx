@@ -28,7 +28,7 @@ const LoginModal = () => {
     return (
         <Container>
             <>
-                <AccountModal confirmButtonText='Login' formName='loginForm' primaryButtonText='Sign in'>
+                <AccountModal options={{ btnVariant: 'outline-dark' }} confirmButtonText='Login' formName='loginForm' primaryButtonText='Sign in'>
                     <Form id='loginForm' name='loginForm' onSubmit={submitHandler}>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Username</Form.Label>
