@@ -6,9 +6,9 @@ import { getSession } from 'next-auth/react';
 export const getServerSideProps = async (context: NextPageContext) => {
   const session = await getSession(context);
   // const users = await DBAdapter.query('SELECT * FROM User', 'get')
-  if (!session) return {
+  if (session === null) return {
     redirect: {
-      permanent: true,
+      permanent: false,
       destination: "/no-user"
     },
   }

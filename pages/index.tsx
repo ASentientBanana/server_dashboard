@@ -9,9 +9,9 @@ export const getServerSideProps = async (context: NextPageContext) => {
   const session = await getSession(context);
 
   const args = await Files.loadDeploymentArgs('react');
-  if (!session) return {
+  if (session === null) return {
     redirect: {
-      permanent: true,
+      permanent: false,
       destination: "/no-user"
     },
   }
@@ -31,14 +31,11 @@ const Home = ({ args }: { users: any, args: string[] }) => {
     <Container>
       <>
         {/* @ts-ignore */}
-        <h1>Welcome, {session.user?.username} </h1>
+        <h1>Welcome, {session?.user?.username} </h1>
         <h5>Arguments</h5>
         <ul>
           {args.map((e, i) => <li key={`${e}-${i}`}>{e}</li>)}
         </ul>
-      </> :
-      <>
-        <h1>Please log in</h1>
       </>
     </Container>
   )

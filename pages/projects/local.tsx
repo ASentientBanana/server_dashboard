@@ -19,9 +19,9 @@ export const getServerSideProps = async (context: NextPageContext) => {
   const nginxSites = await Files.getNGINXSites();
   const session = await getSession(context);
 
-  if (!session) return {
+  if (session === null) return {
     redirect: {
-      permanent: true,
+      permanent: false,
       destination: "/no-user"
     },
   }
