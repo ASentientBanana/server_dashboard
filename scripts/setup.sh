@@ -68,12 +68,7 @@ nvm install 16
 echo "Creating database file"
 touch $project_dir/db.sqlite
 
-
 nvm use 16
-
-
-node $project_dir/scripts/database/setup.js && node $project_dir/scripts/database/register.js $username $password
-
 
 # echo $RANDOM | md5sum | head -c 20; echo;
 
@@ -81,6 +76,10 @@ echo "Installing packages..."
 $installcmd $packages
 systemctl enable nginx.service && systemctl start nginx.service
 
+echo "Installing node modules..."
+yarn --cwd $project_dir setup
+echo "Installing node modules..."
+yarn --cwd $project_dir register $username $password
 echo "Installing node modules..."
 yarn --cwd $project_dir install
 echo "Creating build..."

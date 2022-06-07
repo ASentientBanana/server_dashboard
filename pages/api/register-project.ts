@@ -11,7 +11,6 @@ export default async function handler(
     res: NextApiResponse<Data | null>
 ) {
     if (req.method === 'POST') {
-
         await DBAdapter.createProjectEntry({
             name: req.body.name,
             location: req.body.location,

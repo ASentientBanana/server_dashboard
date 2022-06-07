@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import { Files } from '../../services/files';
 import { getSession, useSession } from 'next-auth/react';
 import ProjectList from '../../components/ProjectList';
-import { File } from '../../types/file';
+import { File, QueryFile } from '../../types/file';
 import getConfig from 'next/config';
 import { useState } from 'react';
 import RegisteredView from '../../components/LocalProjects/RegisteredView';
@@ -30,19 +30,21 @@ export const getServerSideProps = async (context: NextPageContext) => {
       }
     }
   }
-  const registeredProjects = await DBAdapter
-    .query<File[]>(queries.GET_PROJECTS_IF_LOCAL(true, session?.user?.id));
-  const pathList = registeredProjects.map(proj => proj.path);
-  const unregisteredList = (await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]))
-    .filter((project) => !pathList.includes(project.path));
-  console.log(registeredProjects);
+  const registeredProjectList = await DBAdapter
+    .query<QueryFile[]>(queries.GET_PROJECTS_IF_LOCAL(true, session?.user?.id));
+  const pathList = registeredProjectList.map(proj => proj.project_location);
+  const unregisteredProjectList = (await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]))
+    .filter((project) => {
+      return !pathList.includes(project.path)
+    });
+  const parsedRegisteredProjects: File[] = registeredProjectList.map((item) => ({ name: item.project_name, path: item.project_location }))
 
   return {
     props: {
       sites: {
         nginx: nginxSites,
-        unregistered: registeredProjects,
-        registered: unregisteredList
+        unregistered: unregisteredProjectList,
+        registered: parsedRegisteredProjects
       }
     }
   }
@@ -59,11 +61,11 @@ interface IRenderViewProps {
 const renderView = (key: string, props: IRenderViewProps) => {
   switch (key) {
     case 'link-1':
-      return <RegisteredView />
+      return <RegisteredView projects={props.registered} />
     case 'link-2':
       return <UnregisteredView projects={props.unregistered} />
     default:
-      return <RegisteredView />
+      return <RegisteredView projects={props.registered} />
   }
 }
 

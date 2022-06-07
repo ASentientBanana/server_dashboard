@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "setup": "node ./scripts/database/startup.js",
-    "register": "node ./scripts/database/register.js"
+    "register": "node ./scripts/database/register.js",
+    "truncate": "node ./scripts/database/truncate.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

@@ -1,7 +1,7 @@
 import { MutableRefObject, useRef, useState } from "react";
 import Modal from "../../modal";
 import Button from "react-bootstrap/Button";
-import { File } from '../../../types/file';
+import { File, QueryFile } from '../../../types/file';
 import { Form } from "react-bootstrap";
 import { PROJECT_TYPES } from "../../../globals";
 import { useSession } from "next-auth/react";
@@ -20,8 +20,6 @@ const RegisterProjectModal = ({ project }: IProps) => {
 
     const registerProject = async () => {
         const baseUrl = process.env.baseUrl;
-        console.log(`${baseUrl}/api/register-project`);
-
         if (session?.user?.id) {
             const res = await fetch(`${baseUrl}/api/register-project`, {
                 method: 'POST',

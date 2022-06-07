@@ -7,7 +7,6 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<AuthRegisterUserResponse | null>
 ) {
-    console.log(req.method);
     if (req.method !== 'POST') {
         res.status(400).json({ username: '', id: 'masdlknakdn', password: '' });
         return;

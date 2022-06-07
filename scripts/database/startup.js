@@ -10,22 +10,20 @@ const CREATE_USER_TABLE = `CREATE TABLE IF NOT EXISTS "User" (
 
 const CREATE_PROJECT_TABLE = `CREATE TABLE IF NOT EXISTS "Projects" (
     "id" INTEGER UNIQUE,
-    "project_name" TEXT UNIQUE NOT NULL,
+    "project_name" TEXT NOT NULL UNIQUE,
     "project_type" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "is_local" INT NOT NULL,
-    "project_location" TEXT UNIQUE NOT NULL,
+    "project_location" TEXT NOT NULL UNIQUE,
     PRIMARY KEY("id" AUTOINCREMENT));`
 
 const CREATE_PATH_TABLE = `CREATE TABLE  IF NOT EXISTS "Paths" (
 	"id"	INTEGER UNIQUE,
     "label" TEXT,
 	"path"	TEXT NOT NULL,
-	"user_id"	TEXT NOT NULL,
-    "project_id" TEXT NOT NULL, 
-	PRIMARY KEY("id" AUTOINCREMENT)
-);`
-// TODO REMOVE PROJECT ID
+	"user_id" TEXT NOT NULL,
+	PRIMARY KEY("id" AUTOINCREMENT));`
+
 // Initial table creation if database doesn't contain it
 
 const baseDir = config.serverRuntimeConfig.baseDir;
@@ -34,7 +32,6 @@ const baseDir = config.serverRuntimeConfig.baseDir;
     const sql = sqlite.verbose();
     const db = new sql.Database(`${baseDir}/db.sqlite`, (err) => {
         if (err) {
-            console.log("OPEN CONNECTION ERR");
             throw err
         }
     });

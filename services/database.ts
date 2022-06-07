@@ -79,10 +79,8 @@ export class DBAdapter {
 
   static async createProjectEntry(project: NewProject) {
     const projectQuery = queries.CREATE_PROJECT(project);
-    const pathQuery = queries.CREATE_PROJECT(project);
     const db = await DBAdapter._openConnection();
     await DBAdapter._query(db, projectQuery, 'run');
-    await DBAdapter._query(db, pathQuery, 'run');
     db.close();
   }
 }
