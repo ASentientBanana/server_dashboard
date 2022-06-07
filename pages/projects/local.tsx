@@ -15,21 +15,17 @@ import { NextPageContext } from 'next';
 import PATHS from '../../services/definitions/paths';
 
 export const getServerSideProps = async (context: NextPageContext) => {
-  const projectPath = getConfig()
+  const projectPath = getConfig();
   const nginxSites = await Files.getNGINXSites();
   const session = await getSession(context);
 
-  if (!session) {
-    return {
-      props: {
-        sites: {
-          nginx: { available: [], enabled: [] },
-          unregistered: [],
-          registered: []
-        }
-      }
-    }
+  if (!session) return {
+    redirect: {
+      permanent: true,
+      destination: "/no-user"
+    },
   }
+
   const registeredProjectList = await DBAdapter
     .query<QueryFile[]>(queries.GET_PROJECTS_IF_LOCAL(true, session?.user?.id));
   const pathList = registeredProjectList.map(proj => proj.project_location);
@@ -77,22 +73,22 @@ const Home = ({ sites }: ILocalProjectProps) => {
   const onSelectHandler = (a: any) => setSelectedNav(a as string);
 
   return (
-    session ?
+    // session ?
+    <Container>
+      <br />
+      <Nav variant="tabs" onSelect={onSelectHandler} activeKey={selectedNav} defaultActiveKey={0}>
+        <Nav.Item>
+          <Nav.Link eventKey="link-1">Registered</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-2">Unregistered</Nav.Link>
+        </Nav.Item>
+      </Nav>
       <Container>
-        <br />
-        <Nav variant="tabs" onSelect={onSelectHandler} activeKey={selectedNav} defaultActiveKey={0}>
-          <Nav.Item>
-            <Nav.Link eventKey="link-1">Registered</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="link-2">Unregistered</Nav.Link>
-          </Nav.Item>
-        </Nav>
-        <Container>
-          {renderView(selectedNav, { registered: sites.registered, unregistered: sites.unregistered })}
-        </Container>
-      </Container > :
-      <h1>User not logged int</h1>
+        {renderView(selectedNav, { registered: sites.registered, unregistered: sites.unregistered })}
+      </Container>
+    </Container >
+    // :<h1>User not logged int</h1>
   )
 }
 

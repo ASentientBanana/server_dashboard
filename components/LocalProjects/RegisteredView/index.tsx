@@ -12,10 +12,9 @@ interface IProps {
 
 const RegisteredView = ({ projects }: IProps) => {
 
-    console.log(projects);
-
     return (
         <Container>
+            <br />
             {projects.map((project: File, index: number) => (
                 <React.Fragment key={`${project.name}-${index}`}>
                     <Card style={{ width: '20rem' }}>
@@ -36,7 +35,7 @@ const RegisteredView = ({ projects }: IProps) => {
                 </React.Fragment>
             ))}
         </Container>
-    )
+    );
 }
 
 export default RegisteredView;

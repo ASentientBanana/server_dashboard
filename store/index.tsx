@@ -1,24 +1,23 @@
 import { makeAutoObservable } from "mobx";
 
-interface IUser{
-    name:string,
-    gitURL:string,
-    gitUsername:string,
-} 
-
+interface IUser {
+    name: string,
+    gitURL: string,
+    gitUsername: string,
+}
 
 class Store {
-    user?: IUser 
+    user?: IUser
     navTabIndex: number = 0;
     openDrawer: boolean = false;
-    constructor(){
+    constructor() {
         makeAutoObservable(this);
     }
-    setTabIndex(newIndex:number){
+    setTabIndex(newIndex: number) {
         this.navTabIndex = newIndex;
     }
-    toggleDrawer(drawerState?:boolean){
-        if(drawerState) this.openDrawer = drawerState
+    toggleDrawer(drawerState?: boolean) {
+        if (drawerState) this.openDrawer = drawerState
         else this.openDrawer = !this.openDrawer;
     }
 }

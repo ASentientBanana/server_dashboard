@@ -1,8 +1,17 @@
+import { NextPageContext } from 'next';
 import { Container } from 'react-bootstrap';
 import { DBAdapter } from '../../services/database';
+import { getSession } from 'next-auth/react';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: NextPageContext) => {
+  const session = await getSession(context);
   // const users = await DBAdapter.query('SELECT * FROM User', 'get')
+  if (!session) return {
+    redirect: {
+      permanent: true,
+      destination: "/no-user"
+    },
+  }
 
   return {
     props: {
