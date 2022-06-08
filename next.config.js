@@ -7,7 +7,7 @@ const nextConfig = {
     baseDir: __dirname
   },
   env: {
-    baseUrl: process.env.BASE_RUL
+    baseUrl: process.env.BASE_URL
   }
 }
 

@@ -19,6 +19,7 @@ const RegisterProjectModal = ({ project }: IProps) => {
     const [isLoading, setIsLoading] = useState(false);
     const { data: session } = useSession();
     const showDispatch = useState(false);
+
     const registerProject = async () => {
         const baseUrl = process.env.baseUrl;
         if (session?.user?.id) {

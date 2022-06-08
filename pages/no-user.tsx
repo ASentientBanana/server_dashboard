@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 
 export const getServerSideProps = async (context: NextPageContext) => {
     const session = await getSession(context);
-    if (!session) {
+    if (session) {
         return {
             redirect: {
                 permanent: false,

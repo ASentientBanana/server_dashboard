@@ -25,7 +25,7 @@ const UnregisteredView = ({ projects }: IProps) => {
                         </Card.Body>
                         <Card.Footer>
                             <RegisterProjectModal project={projects[index]} />
-                            <DirViewModal />
+                            <DirViewModal path="/home/petar/Downloads" />
                         </Card.Footer>
                     </Card>
                     <br />

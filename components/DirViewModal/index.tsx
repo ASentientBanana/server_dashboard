@@ -67,7 +67,7 @@ const AccordionElem = ({ data, title }: { data: ReactNode[], title: string }) =>
 
 
 
-const DirViewModal = ({ path = '/home/petarkocic/Documents' }: { path?: string }) => {
+const DirViewModal = ({ path = '/home/petar/Documents' }: { path?: string }) => {
     const [showModal, setShowModal] = useState(false);
     const [dirStruct, setDirStruct] = useState<DirStruct[]>([]);
 

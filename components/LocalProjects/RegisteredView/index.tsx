@@ -27,7 +27,7 @@ const RegisteredView = ({ projects }: IProps) => {
                             <Button variant="outline-dark">
                                 Remove
                             </Button>
-                            <DirViewModal />
+                            <DirViewModal path="/home/petar/Downloads" />
                         </Card.Footer>
                     </Card>
                     <br />
