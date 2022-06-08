@@ -12,9 +12,9 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data | null>
 ) {
-    if (req.method === 'GET') {
-        res.status(401).json({ data: 'Bad request. No path.' })
-        const result = await Files.getFolderContentsRecursive('/')
+    if (req.method === 'POST') {
+        if (!req.body.path) res.status(401).json({ data: 'Bad request. No path.' })
+        const result = await Files.getFolderContentsRecursive(req.body.path)
 
         res.status(200).json({ data: result })
     } else {

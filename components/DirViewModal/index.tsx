@@ -73,10 +73,11 @@ const DirViewModal = ({ path = '/home/petarkocic/Documents' }: { path?: string }
 
     const getDirStruct = useCallback(async () => {
         const res = await fetch('http://localhost:3000/api/get-dir-structure', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'content-type': 'application/json'
             },
+            body: JSON.stringify({ path })
         });
         setDirStruct((await res.json()).data)
     }, []);
