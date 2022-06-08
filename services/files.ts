@@ -1,7 +1,8 @@
 import { promises } from 'fs';
 import paths from './definitions/paths';
-import { File } from '../types/file';
+import { DirectoryStructure, File, DirStruct } from '../types/file';
 import getConfig from 'next/config';
+import { fileURLToPath } from 'url';
 
 export class Files {
   static async getNGINXSites() {
@@ -15,7 +16,6 @@ export class Files {
   }
 
   static async getFolderContents(folders: string[]): Promise<File[]> {
-
     const contents: File[] = []
     if (Array.isArray(folders)) {
       for (let i = 0; i < folders.length; i++) {
@@ -33,6 +33,29 @@ export class Files {
     }
     return contents;
   }
+
+
+  static async getFolderContentsRecursive(basePath: string): Promise<any[]> {
+    const _contents = [];
+    const dirContents = await promises.readdir(basePath, { withFileTypes: true });
+    for (let i = 0; i < dirContents.length; i++) {
+      if (dirContents[i].isDirectory()) {
+        const contents = await Files.getFolderContentsRecursive(`${basePath}/${dirContents[i].name}`);
+        _contents.push({
+          name: dirContents[i].name,
+          contents
+        })
+      } else {
+        _contents.push({
+          name: dirContents[i].name,
+          contents: null
+        })
+      }
+    }
+
+    return _contents.sort((a, b) => a.contents !== null ? 0 : -1);
+  }
+
   static async loadDeploymentArgs(deployment: string) {
     const baseDir = getConfig().serverRuntimeConfig.baseDir as string;
     const file = await promises.readFile(`${baseDir}/scripts/deployment/${deployment}.sh`, { encoding: 'utf-8' });

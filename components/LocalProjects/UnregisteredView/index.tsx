@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import { File } from '../../../types/file';
 import RegisterProjectModal from './registerProjectModal';
+import DirViewModal from "../../DirViewModal";
 
 interface IProps {
     projects: File[]
@@ -24,9 +25,7 @@ const UnregisteredView = ({ projects }: IProps) => {
                         </Card.Body>
                         <Card.Footer>
                             <RegisterProjectModal project={projects[index]} />
-                            <Button variant="outline-dark">
-                                Details
-                            </Button>
+                            <DirViewModal />
                         </Card.Footer>
                     </Card>
                     <br />

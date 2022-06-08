@@ -17,3 +17,10 @@ export type QueryFile = {
   is_local: boolean,
   project_location: string,
 }
+
+
+export type DirStruct = { name: string, contents: null | DirStruct[] }
+
+export type DirectoryStructure = {
+  [index: string]: string | DirectoryStructure
+}

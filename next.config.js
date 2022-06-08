@@ -10,4 +10,5 @@ const nextConfig = {
     baseUrl: process.env.BASE_RUL
   }
 }
+
 module.exports = nextConfig

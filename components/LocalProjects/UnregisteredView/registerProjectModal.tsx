@@ -16,12 +16,14 @@ const RegisterProjectModal = ({ project }: IProps) => {
     const [projectName, setProjectName] = useState(project.name);
     const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
     const [projectLocation, setProjectLocation] = useState(project.path);
+    const [isLoading, setIsLoading] = useState(false);
     const { data: session } = useSession();
-
+    const showDispatch = useState(false);
     const registerProject = async () => {
         const baseUrl = process.env.baseUrl;
         if (session?.user?.id) {
-            const res = await fetch(`${baseUrl}/api/register-project`, {
+            setIsLoading(true);
+            await fetch(`${baseUrl}/api/register-project`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -33,7 +35,8 @@ const RegisterProjectModal = ({ project }: IProps) => {
                     location: projectLocation,
                     userID: session?.user.id,
                 })
-            })
+            });
+            setIsLoading(false);
         }
     }
 
@@ -44,7 +47,8 @@ const RegisterProjectModal = ({ project }: IProps) => {
                 formName="project-register-form"
                 options={{ btnVariant: 'outline-dark' }}
                 primaryButtonText="Register project"
-                confirmButtonText="Register" >
+                disabled={isLoading}
+                confirmButtonText={isLoading ? 'Loading...' : 'Register'}>
                 <Form name="project-register-form">
                     <Form.Group className="mb-3">
                         <Form.Label htmlFor="project_name">Project name</Form.Label>

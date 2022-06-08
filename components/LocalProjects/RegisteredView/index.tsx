@@ -3,6 +3,7 @@ import { File } from '../../../types/file';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from 'react';
+import DirViewModal from "../../DirViewModal";
 
 
 interface IProps {
@@ -26,9 +27,7 @@ const RegisteredView = ({ projects }: IProps) => {
                             <Button variant="outline-dark">
                                 Remove
                             </Button>
-                            <Button variant="outline-dark">
-                                Details
-                            </Button>
+                            <DirViewModal />
                         </Card.Footer>
                     </Card>
                     <br />

@@ -9,14 +9,15 @@ interface IModalProps {
     confirmButtonText: string,
     formName?: string,
     primaryButtonText: string,
-    options: {
+    options?: {
         btnVariant?: ButtonVariant
         primaryBtnVariant?: ButtonVariant
     }
+    disabled?: boolean,
     callback?: () => void
 }
 
-const AccountModal = ({ callback, children, confirmButtonText, formName, primaryButtonText, options }: IModalProps) => {
+const AccountModal = ({ callback, children, confirmButtonText, formName, primaryButtonText, options, disabled }: IModalProps) => {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -26,7 +27,7 @@ const AccountModal = ({ callback, children, confirmButtonText, formName, primary
     return (
         <Container >
             <>
-                <Button onClick={handleShow} variant={options?.primaryBtnVariant ? options?.primaryBtnVariant : 'primary'} >
+                <Button onClick={handleShow} disabled={disabled} variant={options?.primaryBtnVariant ? options?.primaryBtnVariant : 'primary'} >
                     {primaryButtonText}
                 </Button>
 

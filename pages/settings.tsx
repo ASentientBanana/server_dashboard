@@ -1,8 +1,8 @@
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
+import Container from "react-bootstrap/Container";
 
 export const getServerSideProps = async (context: NextPageContext) => {
-    console.log("settings rend");
     const session = await getSession(context);
     console.log(session);
 
@@ -14,18 +14,16 @@ export const getServerSideProps = async (context: NextPageContext) => {
     }
 
     return {
-        props: {
-            users: []
-        }
+        props: {}
     }
 }
 const Settings = () => {
 
 
     return (
-        <div>
-            Some data
-        </div>
+        <Container>
+            <h1>SETTINGS</h1>
+        </Container>
     );
 }
 
