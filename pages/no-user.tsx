@@ -22,8 +22,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
 };
 
 const NoUser = () => {
-
-
     return (
         <Container>
             <Col style={{ padding: '20rem' }}>

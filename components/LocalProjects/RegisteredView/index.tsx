@@ -7,34 +7,37 @@ import DirViewModal from "../../DirViewModal";
 
 
 interface IProps {
-    projects: File[]
+  projects: File[]
 }
 
 
 const RegisteredView = ({ projects }: IProps) => {
 
-    return (
-        <Container>
-            <br />
-            {projects.map((project: File, index: number) => (
-                <React.Fragment key={`${project.name}-${index}`}>
-                    <Card style={{ width: '20rem' }}>
-                        <Card.Body>
-                            <Card.Title>{project.path}</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">{project.path}</Card.Subtitle>
-                        </Card.Body>
-                        <Card.Footer>
-                            <Button variant="outline-dark">
-                                Remove
-                            </Button>
-                            <DirViewModal path="/home/petar/Downloads" />
-                        </Card.Footer>
-                    </Card>
-                    <br />
-                </React.Fragment>
-            ))}
-        </Container>
-    );
+  return (
+    <Container>
+      <br />
+      {projects.map((project: File, index: number) => (
+        <React.Fragment key={`${project.name}-${index}`}>
+          <Card style={{ width: '20rem' }}>
+            <Card.Body>
+              <Card.Title>{project.path}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">{project.path}</Card.Subtitle>
+            </Card.Body>
+            <Card.Footer>
+              <Button variant="outline-dark">
+                Remove
+              </Button>
+              <DirViewModal path="/home/petar/Downloads" />
+              <Button variant="outline-dark">
+                Deploy default
+              </Button>
+            </Card.Footer>
+          </Card>
+          <br />
+        </React.Fragment>
+      ))}
+    </Container>
+  );
 }
 
 export default RegisteredView;

@@ -1,4 +1,4 @@
-import sqlite3, { Database } from 'sqlite3';
+import sqlite3 from 'sqlite3';
 import getConfig from 'next/config'
 import queries from './definitions/queries';
 import bcrypt from 'bcrypt';

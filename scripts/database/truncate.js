@@ -12,23 +12,24 @@ const TRUNCATE_PATH_TABLE = `DELETE FROM Paths;`
 
 const baseDir = config.serverRuntimeConfig.baseDir;
 
-(async function () {
-    const sql = sqlite.verbose();
-    const db = new sql.Database(`${baseDir}/db.sqlite`, (err) => {
-        if (err) {
-            throw err
-        }
+(async function() {
+  const sql = sqlite.verbose();
+  const db = new sql.Database(`${baseDir}/db.sqlite`, (err) => {
+    if (err) {
+      throw err
+    }
+  });
+  db.serialize(() => {
+    db.run(TRUNCATE_USER_TABLE, (err) => {
+      if (err !== null) throw err
+    })
+    db.run(TRUNCATE_PROJECT_TABLE, (err) => {
+      if (err !== null) throw err
     });
-    db.serialize(() => {
-        db.run(TRUNCATE_USER_TABLE, (err) => {
-            if (err !== null) throw err
-        })
-        db.run(TRUNCATE_PROJECT_TABLE, (err) => {
-            if (err !== null) throw err
-        });
-        db.run(TRUNCATE_PATH_TABLE, (err) => {
-            if (err !== null) throw err
-        });
-        db.close()
+    db.run(TRUNCATE_PATH_TABLE, (err) => {
+      if (err !== null) throw err
     });
+    db.close()
+  });
 })();
+
