@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { DBAdapter } from '../../../services/database';
+import { DBAdapter } from '../../../services/DatabaseAdapter';
 import { AuthRegisterUserResponse } from '../../../types/user';
 
 export default async function handler(

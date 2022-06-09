@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { DBAdapter } from '../../services/database';
-import { Files } from '../../services/files';
+import { DBAdapter } from '../../services/DatabaseAdapter';
+import { Files } from '../../services/FSAdapter';
 import { DirectoryStructure, DirStruct } from '../../types/file';
 
 type Data = {

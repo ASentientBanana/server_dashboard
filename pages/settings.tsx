@@ -3,7 +3,7 @@ import { getSession } from "next-auth/react";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { DBAdapter } from "../services/database";
+import { DBAdapter } from "../services/DatabaseAdapter";
 
 
 export const getServerSideProps = async (context: NextPageContext) => {

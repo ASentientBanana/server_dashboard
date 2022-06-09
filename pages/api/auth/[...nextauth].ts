@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialProvider from 'next-auth/providers/credentials';
-import { DBAdapter } from '../../../services/database';
+import { DBAdapter } from '../../../services/DatabaseAdapter';
 import bcrypt from 'bcrypt';
 
 

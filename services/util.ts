@@ -1,5 +1,5 @@
-import { DBAdapter } from "./database";
-import { Files } from "./files";
+import { DBAdapter } from "./DatabaseAdapter";
+import { Files } from "./FSAdapter";
 
 export const sanitizeInclude = (source: any, fields: string[]) => {
     const newObject = { ...source };

@@ -1,6 +1,6 @@
 import { NextPageContext } from 'next';
 import { Container } from 'react-bootstrap';
-import { DBAdapter } from '../../services/database';
+import { DBAdapter } from '../../services/DatabaseAdapter';
 import { getSession } from 'next-auth/react';
 
 export const getServerSideProps = async (context: NextPageContext) => {

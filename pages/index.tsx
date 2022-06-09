@@ -1,6 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { useSession } from 'next-auth/react'
-import { Files } from '../services/files';
+import { Files } from '../services/FSAdapter';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
 
