@@ -18,7 +18,8 @@ const queries = {
 
   CHANGE_PASSWORD: (password: string, id: string) => `UPDATE User SET password = "${password}" WHERE id = ${id};`,
 
-  GET_PROJECTS_IF_LOCAL: (isLocal: boolean, userID: string) => `SELECT * FROM "Projects" WHERE is_local=${isLocal} AND user_id=${userID};`
+  GET_PROJECTS_IF_LOCAL: (isLocal: boolean, userID: string) => `SELECT * FROM "Projects" WHERE is_local=${isLocal} AND user_id=${userID};`,
+  GET_PROJECT_BY_ID: (ID: string) => `SELECT * FROM "Projects" WHERE id=${ID};`
 }
 // GET_PROJECTS_IF_LOCAL: (isLocal: boolean, userID: string) => `SELECT * FROM Projects INNER JOIN Paths ON Projects.id = Paths.project_id WHERE is_local=${isLocal} AND Projects.user_id=${userID};`
 // **OLD

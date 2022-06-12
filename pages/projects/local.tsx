@@ -26,17 +26,25 @@ export const getServerSideProps = async (context: NextPageContext) => {
     },
   }
 
+  // Todo: Fix this shit pls
+  const paths = await DBAdapter.query('SELECT * FROM "Paths"', 'get') as string[]
+
   const registeredProjectList = await DBAdapter
     .query<QueryFile[]>(queries.GET_PROJECTS_IF_LOCAL(true, session?.user?.id));
   const pathList = registeredProjectList.map(proj => proj.project_location);
-  const unregisteredProjectList = (await Files.getFolderContents([projectPath.serverRuntimeConfig.baseDir]))
+  const unregisteredProjectList = (await Files.getFolderContents(['/home/petar/Downloads']))
     .filter((project) => {
       return !pathList.includes(project.path)
     });
-  const parsedRegisteredProjects: File[] = registeredProjectList.map((item) => ({ name: item.project_name, path: item.project_location }))
+  const parsedRegisteredProjects: File[] = registeredProjectList.map((item) => ({
+    name: item.project_name,
+    path: item.project_location,
+    id: item.id
+  }))
 
   return {
     props: {
+      paths,
       sites: {
         nginx: nginxSites,
         unregistered: unregisteredProjectList,
@@ -47,6 +55,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
 }
 interface ILocalProjectProps {
   sites: { nginx: { available: string[], enabled: string[] }, unregistered: File[], registered: File[] },
+  paths: string[]
 }
 
 interface IRenderViewProps {
@@ -66,7 +75,7 @@ const renderView = (key: string, props: IRenderViewProps) => {
 }
 
 
-const Home = ({ sites }: ILocalProjectProps) => {
+const Home = ({ sites, paths }: ILocalProjectProps) => {
 
   const { data: session } = useSession();
   const [selectedNav, setSelectedNav] = useState('link-1');

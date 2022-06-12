@@ -8,6 +8,7 @@ import NoAccountMessage from '../components/NoAccountMessage';
 
 function MyApp({ Component, pageProps }: AppProps) {
   // const { data: session } = useSession()
+  
   return (
     <SessionProvider session={pageProps.session} refetchInterval={0}>
       <SSRProvider>

@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import { File } from '../../../types/file';
 import RegisterProjectModal from './registerProjectModal';
 import DirViewModal from "../../DirViewModal";
+import style from '../style.module.sass'
+
 
 interface IProps {
   projects: File[]
@@ -12,7 +14,7 @@ interface IProps {
 const UnregisteredView = ({ projects }: IProps) => {
 
   return (
-    <Container>
+    <Container className={style.mainContainer}>
       <br />
       {projects.map((project: File, index: number) => (
         <React.Fragment key={`${project.name}-${index}`}>

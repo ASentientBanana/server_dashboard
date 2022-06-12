@@ -18,8 +18,6 @@ export const getServerSideProps = async (context: NextPageContext) => {
   }
 
   const paths = [await DBAdapter.query('SELECT * FROM "Paths"', 'get')]
-  console.log('path:');
-  console.log(paths);
 
   return {
     props: {
@@ -40,7 +38,7 @@ const Settings = ({ paths }: IProps) => {
 
   return (
     <Container>
-      <h1>SETTINGS</h1>
+      <h1>Kad ce dodjes picko?</h1>
 
       <Container>
         <Container>

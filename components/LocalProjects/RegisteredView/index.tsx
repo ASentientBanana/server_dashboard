@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import React from 'react';
 import DirViewModal from "../../DirViewModal";
+import { useRouter } from "next/router";
 
 
 interface IProps {
@@ -12,6 +13,7 @@ interface IProps {
 
 
 const RegisteredView = ({ projects }: IProps) => {
+  const router = useRouter();
 
   return (
     <Container>
@@ -28,8 +30,10 @@ const RegisteredView = ({ projects }: IProps) => {
                 Remove
               </Button>
               <DirViewModal path="/home/petar/Downloads" />
-              <Button variant="outline-dark">
-                Deploy default
+              <Button onClick={() => {
+                router.push(`/deploy/${project.id}`)
+              }} variant="outline-dark">
+                Deploy
               </Button>
             </Card.Footer>
           </Card>
