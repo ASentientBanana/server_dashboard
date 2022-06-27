@@ -12,9 +12,7 @@ export const getServerSideProps = withServerSession(async () => ({
     paths: 'some sample text'
   }
 
-}))
-
-
+}));
 
 
 

@@ -28,7 +28,9 @@ const Home = ({ args }: { users: any, args: string[] }) => {
         <h1>Welcome, {session?.user?.username} </h1>
         <h5>Arguments</h5>
         <ul>
-          {args.map((e, i) => <li key={`${e}-${i}`}>{e}</li>)}
+          <li>Nginx status</li>
+          <li>OS type/version</li>
+          <li>OS update available?</li>
         </ul>
       </>
     </Container>

@@ -17,9 +17,10 @@ const Layout = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
+                        <Nav.Link href="/">Home</Nav.Link>
                         <Nav.Link href="/settings">Settings</Nav.Link>
-                        <Nav.Link href="/projects">Settings</Nav.Link>
-
+                        <Nav.Link href="/projects">Projects</Nav.Link>
+                        <Nav.Link href="/deploy">Deploy</Nav.Link>
                     </Nav>
                     <Nav>
                         {session ?

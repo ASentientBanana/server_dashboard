@@ -64,6 +64,7 @@ export class Files {
     for (let index = 0; index < separatedFile.length; index++) {
       if (separatedFile[index].slice(0, 5) === '#args') {
         argString = separatedFile[index];
+        break;
       }
     }
 
