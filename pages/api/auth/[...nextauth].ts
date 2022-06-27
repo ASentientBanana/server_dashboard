@@ -32,7 +32,7 @@ export default NextAuth({
         }
         return null
       }
-    })
+    }),
   ],
   callbacks: {
     redirect: ({ baseUrl }) => {

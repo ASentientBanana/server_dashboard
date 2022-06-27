@@ -4,44 +4,28 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { DBAdapter } from "../services/DatabaseAdapter";
+import { withServerSession } from "../services/session";
 
 
-export const getServerSideProps = async (context: NextPageContext) => {
-  const session = await getSession(context);
-  console.log(session);
-
-  if (session === null) return {
-    redirect: {
-      permanent: false,
-      destination: "/no-user"
-    },
+export const getServerSideProps = withServerSession(async () => ({
+  props: {
+    paths: 'some sample text'
   }
 
-  const paths = [await DBAdapter.query('SELECT * FROM "Paths"', 'get')]
+}))
 
-  return {
-    props: {
-      paths
-    }
-  }
-}
-interface IProps {
-  paths: {
-    id: number,
-    path: string,
-    label: string,
-    user_id: string
-  }[]
-}
-const Settings = ({ paths }: IProps) => {
 
+
+
+
+const Settings = ({ paths }: any) => {
+
+  // const paths = [await DBAdapter.query('SELECT * FROM "Paths"', 'get')]
 
   return (
     <Container>
-      <h1>Kad ce dodjes picko?</h1>
-
-      <Container>
-        <Container>
+      <h1>{paths}</h1>
+      {/* <Container>
           <Form>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Enter a path  to the projects folder.</Form.Label>
@@ -61,11 +45,18 @@ const Settings = ({ paths }: IProps) => {
               }
             </Container>
           </Form>
-        </Container>
-      </Container>
+        </Container> */}
 
     </Container>
   );
 }
 
 export default Settings;
+interface IProps {
+  paths: {
+    id: number,
+    path: string,
+    label: string,
+    user_id: string
+  }[]
+}

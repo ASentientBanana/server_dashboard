@@ -6,6 +6,7 @@ import LoginModal from '../AccountModals/loginModal';
 import { signOut, useSession } from 'next-auth/react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
+import Link from 'next/link';
 
 const Layout = () => {
     const { data: session } = useSession()
@@ -17,13 +18,13 @@ const Layout = () => {
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/settings">Settings</Nav.Link>
-                        <NavDropdown title="Projects" id="collapsible-nav-dropdown">
-                            <NavDropdown.Item href="/projects/local">Local projects</NavDropdown.Item>
-                            <NavDropdown.Item href="/projects/remote">Remote Projects</NavDropdown.Item>
-                        </NavDropdown>
+                        <Nav.Link href="/projects">Settings</Nav.Link>
+
                     </Nav>
                     <Nav>
-                        {session ? <Button onClick={() => signOut()} > Sign out </Button> : <> <LoginModal /> </>}
+                        {session ?
+                            <Button onClick={() => signOut()} > Sign out </Button> :
+                            <Link href='/api/auth/signin'>Sign In</Link>}
                     </Nav>
                 </Navbar.Collapse>
             </Container>

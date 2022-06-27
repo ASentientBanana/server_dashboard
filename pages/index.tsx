@@ -3,18 +3,12 @@ import { useSession } from 'next-auth/react'
 import { Files } from '../services/FSAdapter';
 import { getSession } from 'next-auth/react';
 import { NextPageContext } from 'next';
+import { withServerSession } from '../services/session';
 
-export const getServerSideProps = async (context: NextPageContext) => {
+export const getServerSideProps = withServerSession(async () => {
   const nginxSites = await Files.getNGINXSites();
-  const session = await getSession(context);
 
   const args = await Files.loadDeploymentArgs('react');
-  if (session === null) return {
-    redirect: {
-      permanent: false,
-      destination: "/no-user"
-    },
-  }
 
   return {
     props: {
@@ -22,7 +16,7 @@ export const getServerSideProps = async (context: NextPageContext) => {
       args
     }
   }
-}
+})
 
 const Home = ({ args }: { users: any, args: string[] }) => {
   const { data: session } = useSession()
