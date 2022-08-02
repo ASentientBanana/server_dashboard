@@ -4,6 +4,9 @@ import { DirectoryStructure, File, DirStruct } from '../types/file';
 import getConfig from 'next/config';
 import { fileURLToPath } from 'url';
 
+const baseDir = getConfig().serverRuntimeConfig.baseDir as string;
+
+
 export class Files {
   static async getNGINXSites() {
     // const res = await promises.stat('/home/petar/Downloads/')
@@ -15,17 +18,17 @@ export class Files {
     }
   }
 
-  static async getFolderContents(folders: string[]): Promise<File[]> {
+  static async getFolderContents(folders: string[], showFiles: boolean = false): Promise<File[]> {
     const contents: File[] = []
     if (Array.isArray(folders)) {
       for (let i = 0; i < folders.length; i++) {
         const dirContents = await promises.readdir(folders[i], { withFileTypes: true });
         for (let j = 0; j < dirContents.length; j++) {
-          if (dirContents[j].isDirectory()) {
-            const path = `${folders[i]}/${dirContents[j].name}`;
+          let path = '';
+          if (showFiles === dirContents[j].isFile()) {
             // const _file = await promises.readFile(path)
-
-            contents.push({ name: dirContents[j].name, path });
+            path = `${folders[i]}/${dirContents[j].name}`;
+            contents.push({ name: dirContents[j].name, path, type: String(showFiles === dirContents[j].isFile()) });
           }
         }
         // const files = dirContents.map(async fileName => await promises.readFile(`${folder[i]}/${fileName}`))
@@ -34,6 +37,11 @@ export class Files {
     return contents;
   }
 
+  static async getDeploymentScripts(): Promise<File[]> {
+    const deploymentScripts = await Files.getFolderContents([`${baseDir}/scripts/deployment/`], true)
+
+    return deploymentScripts;
+  }
 
   static async getFolderContentsRecursive(basePath: string): Promise<any[]> {
     const _contents = [];
@@ -57,7 +65,6 @@ export class Files {
   }
 
   static async loadDeploymentArgs(deployment: string) {
-    const baseDir = getConfig().serverRuntimeConfig.baseDir as string;
     const file = await promises.readFile(`${baseDir}/scripts/deployment/${deployment}.sh`, { encoding: 'utf-8' });
     const separatedFile = file.split('\n');
     let argString = ''

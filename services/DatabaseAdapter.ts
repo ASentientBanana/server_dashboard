@@ -77,6 +77,13 @@ export class DBAdapter {
     return { username: user.username, id: user.id, password };
   }
 
+  static async getProjects() {
+
+    const projects = await DBAdapter.query(queries.GET_ALL_PROJECTS());
+
+    return projects
+  }
+
   static async createProjectEntry(project: NewProject) {
     const projectQuery = queries.CREATE_PROJECT(project);
     const db = await DBAdapter._openConnection();
