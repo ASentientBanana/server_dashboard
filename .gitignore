@@ -37,3 +37,7 @@ yarn-error.log*
 # db
 *.sqlite
 *.sqlite-journal
+
+# /tmp build dir
+
+/tmp

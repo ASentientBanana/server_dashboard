@@ -2,13 +2,13 @@
 
 #args: repo location package_manager   
 
-repo=$1
-locaiton=$2
-package_manager=$3
+# repo=$1
+# locaiton=$2
+# package_manager=$3
 
-git clone $repo:$location
+# git clone $repo:$location
 
-installcmd=$package_manager 
-[ $3 -eq npm ] &&  npm --prefix $location install  
-[ $3 -eq yarn ] && yarn --cwd $location  install
-
+# installcmd=$package_manager 
+# [ $3 -eq npm ] &&  npm --prefix $location install  
+# [ $3 -eq yarn ] && yarn --cwd $location  install
+echo 'RUNNING REACT BUILD'

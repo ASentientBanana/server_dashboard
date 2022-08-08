@@ -1,7 +1,6 @@
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import LoginModal from '../AccountModals/loginModal';
 // import RegisterModal from '../AccountModals/registerModal';
 import { signOut, useSession } from 'next-auth/react';
 import Container from 'react-bootstrap/Container';

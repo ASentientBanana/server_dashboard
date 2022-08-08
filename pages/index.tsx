@@ -11,6 +11,7 @@ export const getServerSideProps = withServerSession(async () => {
   const deployments = await Files.getDeploymentScripts();
   const { serverRuntimeConfig } = getConfig();
   const baseUrl = process.env.baseUrl
+  console.log(baseUrl);
 
   return {
     props: {
@@ -33,7 +34,7 @@ const Home = ({ args, baseUrl, deployments }: IProps) => {
 
   const [localProjectName, setLocalProjectName] = useState('');
   const [gitLink, setGitLink] = useState('');
-  const [projectType, setProjectType] = useState('react');
+  const [projectType, setProjectType] = useState(deployments[0]);
 
   const handleAddProjectSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,11 +78,11 @@ const Home = ({ args, baseUrl, deployments }: IProps) => {
             <FormGroup>
               <Form.Label>project type</Form.Label>
               <Form.Select defaultValue={deployments[0].name}>
-                {deployments.map((deployment, i) => (
+                {/* {deployments.map((deployment, i) => (
                   <option value={deployment.name}>
                     {deployment.name}
                   </option>
-                ))}
+                ))} */}
               </Form.Select>
 
               {/* <FormControl type='text' placeholder='github link' /> */}
